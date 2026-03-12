@@ -122,10 +122,12 @@ Add information about scaling provided by submitter:
     f. scaling of time required as work units increases
 
 
-# 5: I/O
-
+# 5: Memory, Storage and I/O
+Comment on the expected in memory size of the program at runtime, including data. An estimate of this information should be provided as part of the submission. For jobs submitted to Hamilton as part of early assessment, the Hamilton dashboard can be used to gauge memory usage, see [Hamilton Portal Performance](https://www.durham.ac.uk/research/institutes-and-centres/advanced-research-computing/hamilton-supercomputer/usage/portal/performance/).
+Comment on the expected storage requirements of the program, are there large amounts of temporary files (either in quantity or in total size)? An estimate of this information should be provided as part of the submission. A program that produces a large amount of temporary checkpoint files should have checkpoints turned off where possible.
 Comment on amount of I/O benchmark produces, excessive I/O will result in an inaccurate performance assessment and may result in rejection.
 Comment on when the I/O is performed.
+
 
 
 # 6: Hardware information
