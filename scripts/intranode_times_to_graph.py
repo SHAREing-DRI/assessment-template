@@ -95,7 +95,7 @@ def parse_args():
     )
 
     #parser.add_argument("-h", "--help", action="help", help="Show this help message and exit")
-    parser.add_argument("--version", action="version", version="%(prog)s 1.0", help="Show program version number and exit")
+    parser.add_argument("--version", action="version", version="%(prog)s 1.1", help="Show program version number and exit")
 
     parser.add_argument("-g", "--graph", action="store_true", help="Generate graph")
     parser.add_argument("-m", "--markdown", action="store_true", help="Generate markdown table")
@@ -121,6 +121,8 @@ def parse_args():
         args.critical_points = True
     
     if args.default:
+        if args.verbose:
+            print(f"Setting default files")
         if not args.graph_file:
             args.graph_file = 'images/intranode.png'
         if not args.markdown_file:
@@ -131,13 +133,25 @@ def parse_args():
     if args.graph + args.markdown + args.critical_points >= 2 and args.output:
         print("ERROR: single specified output file is not valid when multiple outputs are requested at once.")
         exit()
-    elif args.output:
+    elif args.output != "stdout":
         if not args.graph_file:
             args.graph_file = args.output
         if not args.markdown_file:
             args.markdown_file = args.output
         if not args.critical_points_file:
             args.critical_points_file = args.output
+    
+    if args.graph_file == "stdout":
+        args.graph_file = None
+        args.stdout_graph = True
+    if args.markdown_file == "stdout":
+        args.markdown_file = None
+    if args.critical_points_file == "stdout":
+        args.critical_points_file = None
+
+    if not args.graph and not args.markdown and not args.critical_points:
+        print("WARNING: No output specified, defaulting to graph only")
+        args.graph = True
 
     return args
 
@@ -154,11 +168,13 @@ def _main():
     is_pipe = not os.isatty(sys.stdin.fileno())
 
     if not is_pipe:
-        print(f"Please paste the graph below, then control-D (EOF):")
+        print(f"Please paste the graph below, ending with an empty line:")
 
     lines = []
 
     for line in sys.stdin:
+        if line.strip() == '':
+            break
         lines.append(line)
         
     if args.verbose:
@@ -194,9 +210,9 @@ def _main():
                 os.makedirs(os.path.dirname(args.graph_file), exist_ok=True)
             # Save figure to file
             fig.savefig(args.graph_file)
-        if not args.stdout_graph:
+        if not args.stdout_graph and not args.graph_file:
             plt.show()
-        else:
+        if args.stdout_graph:
             fig.savefig(sys.stdout)
     
     if args.markdown:
