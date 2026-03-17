@@ -103,7 +103,7 @@ def parse_args():
     parser.add_argument("-a", "--output-all", action="store_true", help="Output all output types")
     parser.add_argument("-d", "--default", action="store_true", help="Output any requested outputs with unspecified file to their default file.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Print extra debug outputs")
-    parser.add_argument("-s", "--show-graph", action="store_true", help="Show graph in matplotlib window, and do not output to stdout")
+    parser.add_argument("-s", "--stdout-graph", action="store_true", help="Output image data to stdout")
 
     parser.add_argument("-o", "--output", help="Specify an output file. This can only be used if exactly one output type is requested")
     parser.add_argument("--graph-file", help="Specify an output file for the graph. Default: 'images/intranode.png'")
@@ -194,9 +194,9 @@ def _main():
                 os.makedirs(os.path.dirname(args.graph_file), exist_ok=True)
             # Save figure to file
             fig.savefig(args.graph_file)
-        if args.show_graph:
+        if not args.stdout_graph:
             plt.show()
-        if not args.show_graph and not args.graph_file: # Only output to stdout if we haven't shown or already written the graph.
+        else:
             fig.savefig(sys.stdout)
     
     if args.markdown:
