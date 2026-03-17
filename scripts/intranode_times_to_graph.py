@@ -123,7 +123,7 @@ def parse_args():
     if args.default:
         if args.verbose:
             print(f"Setting default files")
-        if not args.graph_file:
+        if not args.graph_file and not args.stdout_graph:
             args.graph_file = 'images/intranode.png'
         if not args.markdown_file:
             args.markdown_file = 'intranode_table.md'
@@ -144,6 +144,12 @@ def parse_args():
     # "stdout" acts as an undocumented magic file to redirect an output to stdout if the default flag is set.
     # This makes it easier to send one output to default and one to stdout without having to know what the default
     # file is.
+    if args.stdout_graph and args.graph_file:
+        if args.graph_file == "stdout":
+            print("WARNING: Graph file does not need to be specified as 'stdout' if '-s' flag specified")
+        else:
+            print("WARNING: Requested to output graph to both stdout and a file. Limiting to only requested file")
+            args.stdout_graph = None
     if args.graph_file == "stdout":
         args.graph_file = None
         args.stdout_graph = True
