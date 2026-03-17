@@ -141,6 +141,9 @@ def parse_args():
         if not args.critical_points_file:
             args.critical_points_file = args.output
     
+    # "stdout" acts as an undocumented magic file to redirect an output to stdout if the default flag is set.
+    # This makes it easier to send one output to default and one to stdout without having to know what the default
+    # file is.
     if args.graph_file == "stdout":
         args.graph_file = None
         args.stdout_graph = True
