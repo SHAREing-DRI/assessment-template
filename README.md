@@ -33,6 +33,7 @@ Below we list the usage of each script for the high-level assessment.
 Intra-node performance analysis is located in the `intranode_times_to_graph.py` script.
 
 When called as a script, it takes data input from the standard input or a unix pipe.
+It can take either CSV or Markdown table as input.
 For demonstration purposes, suppose we have the data
 ```csv
 1, 29.995
@@ -55,6 +56,21 @@ Now we've checked the graph, we want a markdown table to copy-paste to the repor
 $ cat times.csv | ./scripts/intranode_times_to_graph.py -gmd --markdown-file=stdout
 ```
 
+The script can also take a Markdown table as input in the same way as it can take CSV.
+For a file `times.md`
+```md
+| Thread count | Time (s) | Parallel Efficiency |
+| - | - | - |
+| 1 | 29.995 | 1.000 |
+| 2 | 18.230 | 0.823 |
+| 4 | 10.740 | 0.698 |
+| 8 | 10.330 | 0.363 |
+| 16 | 9.1307 | 0.205 |
+| 32 | 8.5401 | 0.110 |
+| 64 | 7.4589 | 0.063 |
+```
+it can be passed exactly the same as `times.csv` was.
+
 There are a variety of other usage flags, details of which can be found with
 ```shell
 $ ./scripts/intranode_times_to_graph.py --help
@@ -73,7 +89,11 @@ This script is `TODO`
 
 ### `summary.py`
 
-This script is `TODO`
+Generation of a summary graphic is located in the `summary.py` script.
+
+When called as a script, it takes data input from the standard input or a unix pipe the same way as the previous scripts.
+It can take either CSV or Markdown table as input.
+It accepts an arbitrary number of rows of "rubric, score".
 
 ## Contributions
 
@@ -83,8 +103,8 @@ ideas of performance metrics which are necessary but missing, or if you find
 any faults with the notebook, please raise an issue.
 
 ## Acknowledgements
-The initial development of this notebook was implemented by Ben Clark.  This
-project has received funding through the UKRI Digital Research Infrastructure
-Programme under grant UKRI1801 (SHAREing). 
+The initial development of this notebook was implemented by Ben Clark.
+Further work on the notebook was undertaken by Thomas Flynn, before it was rewritten as scripts.
+This project has received funding through the UKRI Digital Research Infrastructure Programme under grant UKRI1801 (SHAREing). 
 
 <img src='./images/ukri.png' width=200 style="vertical-align:middle" /> 
