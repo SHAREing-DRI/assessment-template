@@ -56,9 +56,7 @@ def summary_to_spiderweb(rubrics: list[tuple[str, float]]) -> plt.Figure:
 
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels(names)
-
-    # Customize grid and labels
-    #ax.set_yticklabels([])  # Remove y-axis labels
+    
     ax.set_title("Rubric Scores", fontsize=14)
 
     return fig

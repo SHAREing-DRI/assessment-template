@@ -177,7 +177,7 @@ def _main():
     is_pipe = not os.isatty(sys.stdin.fileno())
 
     if not is_pipe:
-        print(f"Please paste the graph below, ending with an empty line:")
+        print(f"Please paste the data below, ending with an empty line:")
 
     lines = []
 
@@ -185,9 +185,13 @@ def _main():
         if line.strip() == '':
             break
         lines.append(line)
-        
+    
+    ####################
+    # INPUT PROCESSING #
+    ####################
+
     if args.verbose:
-            print("STATUS: processing input")
+        print("STATUS: processing input")
 
     if is_pipe and args.verbose:
         print("Inputted table:")
@@ -208,6 +212,10 @@ def _main():
     times = list(map(strings_to_numbers, lines))
     if args.verbose:
         print(f"times: {times}")
+    
+    #####################
+    # OUTPUT GENERATION #
+    #####################
     
     if args.graph:    
         if args.verbose:

@@ -91,4 +91,4 @@ The following table collates the results of all above sections. These scores are
 | Intra-node (80%) |   |   |
 | Inter-node (80%) |   |   |
 
-<img src='images/spiderweb.png' width=500 />
+<img src='images/summary.png' width=500 />
