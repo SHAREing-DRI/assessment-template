@@ -18,7 +18,7 @@ def intranode_times_crit_80_60(times: list[tuple[int, float]], args=None) -> (fl
     times = np.transpose(np.array(times))
     core_counts = times[0]
     parallel_times = times[1]
-    serial_time = times[1][0]
+    serial_time = times[1][0] * core_counts[0]
 
     # Calculate efficiency and 80%/60% critical core points
     speed_up = serial_time / parallel_times
@@ -44,7 +44,7 @@ def intranode_times_to_graph(times: list[tuple[int, float]], args=None) -> plt.F
     times = np.transpose(np.array(times))
     core_counts = times[0]
     parallel_times = times[1]
-    serial_time = times[1][0]
+    serial_time = times[1][0] * core_counts[0]
 
     # Calculate efficiency and 80%/60% critical core counts
     speed_up = serial_time / parallel_times
@@ -77,7 +77,7 @@ def intranode_times_to_markdown(times: list[tuple[int, float]]) -> str:
     times = np.transpose(np.array(times))
     core_counts = times[0]
     parallel_times = times[1]
-    serial_time = times[1][0]
+    serial_time = times[1][0] * core_counts[0]
 
     # Calculate efficiency and 80%/60% critical core counts
     speed_up = serial_time / parallel_times
