@@ -7,7 +7,7 @@ import sys
 import os
 
 
-def intranode_times_crit_80_60(times: list[tuple[int, float]]) -> (float, float):
+def intranode_times_crit_80_60(times: list[tuple[int, float]], args=None) -> (float, float):
     """ 
     Calculate the 80% and 60% critical proportions
 
@@ -24,15 +24,15 @@ def intranode_times_crit_80_60(times: list[tuple[int, float]]) -> (float, float)
     speed_up = serial_time / parallel_times
     efficiency = speed_up / core_counts
 
-    p_crit_80 = core_counts[(efficiency < 0.8) & (efficiency >= 0.6)][-1]
-    p_crit_60 = core_counts[(efficiency < 0.6) & (core_counts > p_crit_80)][0]
+    p_crit_80 = max(core_counts[efficiency >= 0.8])
+    p_crit_60 = max(core_counts[efficiency >= 0.6])
 
     intra_node_prop_80 = p_crit_80 / max(core_counts)
     intra_node_prop_60 = p_crit_60 / max(core_counts)
 
     return intra_node_prop_80, intra_node_prop_60
 
-def intranode_times_to_graph(times: list[tuple[int, float]]) -> plt.Figure:
+def intranode_times_to_graph(times: list[tuple[int, float]], args=None) -> plt.Figure:
     """ 
     Create matplotlib graph
 
@@ -49,8 +49,11 @@ def intranode_times_to_graph(times: list[tuple[int, float]]) -> plt.Figure:
     # Calculate efficiency and 80%/60% critical core counts
     speed_up = serial_time / parallel_times
     efficiency = speed_up / core_counts
-    p_crit_80 = core_counts[(efficiency < 0.8) & (efficiency >= 0.6)][-1]
-    p_crit_60 = core_counts[(efficiency < 0.6) & (core_counts > p_crit_80)][0]
+    if args and args.verbose:
+        print(f"Calculated efficiencies: {efficiency}")
+
+    p_crit_80 = max(core_counts[efficiency >= 0.8])
+    p_crit_60 = max(core_counts[efficiency >= 0.6])
 
     fig, ax = plt.subplots()
     ax.set_xlabel(r'$p$')
@@ -224,7 +227,7 @@ def _main():
     if args.graph:    
         if args.verbose:
             print("STATUS: generating graph")
-        fig = intranode_times_to_graph(times)
+        fig = intranode_times_to_graph(times, args)
         if args.graph_file:
             # Ensure output directory exists
             if '/' in args.graph_file:
