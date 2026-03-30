@@ -6,6 +6,8 @@ import argparse as ap
 import sys
 import os
 
+import _utils
+
 from enum import StrEnum, auto
 
 DEFAULT_FILE = "images/summary.png"
@@ -91,6 +93,8 @@ def parse_args():
 
     #parser.add_argument("-h", "--help", action="help", help="Show this help message and exit")
     parser.add_argument("--version", action="version", version="%(prog)s 1.0", help="Show program version number and exit")
+    
+    parser.add_argument("-f", "--file", help="Input file")
 
     parser.add_argument("-b", "--bar", action="store_true", help="Output a bar chart instead of a spiderweb")
     parser.add_argument("-d", "--default", action="store_true", help=f"Output to the default file, '{DEFAULT_FILE}'")
@@ -130,17 +134,7 @@ def _main():
 
     args = parse_args()
 
-    is_pipe = not os.isatty(sys.stdin.fileno())
-
-    if not is_pipe:
-        print(f"Please paste the data below, then an empty line:")
-
-    lines = []
-
-    for line in sys.stdin:
-        if line.strip() == '':
-            break
-        lines.append(line)
+    lines = _utils.read_data(args, prompt="Please paste the data below, ending with an empty line:")    
         
     ####################
     # INPUT PROCESSING #
@@ -148,10 +142,6 @@ def _main():
 
     if args.verbose:
         print("STATUS: processing input")
-
-    if is_pipe and args.verbose:
-        print("Inputted table:")
-        print("".join(lines))
 
     if args.verbose:
         print(f"lines: {lines}")

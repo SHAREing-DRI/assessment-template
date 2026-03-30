@@ -6,6 +6,8 @@ import argparse as ap
 import sys
 import os
 
+import _utils
+
 
 def intranode_times_crit_80_60(times: list[tuple[int, float]], args=None) -> (float, float):
     """ 
@@ -104,6 +106,8 @@ def parse_args():
     #parser.add_argument("-h", "--help", action="help", help="Show this help message and exit")
     parser.add_argument("--version", action="version", version="%(prog)s 1.1", help="Show program version number and exit")
 
+    parser.add_argument("-f", "--file", help="Input file")
+
     parser.add_argument("-g", "--graph", action="store_true", help="Generate graph")
     parser.add_argument("-m", "--markdown", action="store_true", help="Generate markdown table")
     parser.add_argument("-c", "--critical-points", action="store_true", help="Calculate 80 and 60 percent critical values")
@@ -187,17 +191,7 @@ def _main():
 
     args = parse_args()
 
-    is_pipe = not os.isatty(sys.stdin.fileno())
-
-    if not is_pipe:
-        print(f"Please paste the data below, ending with an empty line:")
-
-    lines = []
-
-    for line in sys.stdin:
-        if line.strip() == '':
-            break
-        lines.append(line)
+    lines = _utils.read_data(args, prompt="Please paste the data below, ending with an empty line:")
     
     ####################
     # INPUT PROCESSING #
@@ -205,10 +199,6 @@ def _main():
 
     if args.verbose:
         print("STATUS: processing input")
-
-    if is_pipe and args.verbose:
-        print("Inputted table:")
-        print("".join(lines))
 
     if lines[0][0] == '|':
         lines = lines[2:]
