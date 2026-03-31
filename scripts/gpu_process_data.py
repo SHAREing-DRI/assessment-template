@@ -35,8 +35,9 @@ def process_nvidia_csv(args, data):
     
     nice_frame = pandas.DataFrame(nice_frame)
     
-    metric_name_regex = re.compile(".*(op_(d|f)[^_]*)|.*__([^\\.]*)")
-    nice_metric_name = lambda metric: metric_name_regex.match(metric)[1] if metric_name_regex.match(metric)[1] else metric_name_regex.match(metric)[3] if metric_name_regex.match(metric)[3] else metric
+    metric_name_regex = re.compile(r"(.*)__(sass_thread_inst_executed_)?([^\.\n]*?)(_pred_on)?\.([^\.\n]*)(\.(.*))?")
+    match = lambda metric: metric_name_regex.match(metric)
+    nice_metric_name = lambda metric: match(metric)[1] + "/" + match(metric)[3] + "/" + match(metric)[5] + (("/" + match(metric)[7]) if match(metric)[6] else "")
     rename_dict = { metric: nice_metric_name(metric) for metric in metrics }
     
     if args.verbose:
@@ -62,7 +63,8 @@ def parse_args():
     parser.add_argument("-v", "--verbose", action="store_true", help="Print extra debug outputs")
     parser.add_argument("-o", "--output", help="Specify an output file to output a reformatted CSV to")
 
-    parser.add_argument("-t", "--program_time", type=float, help="Specify the total program execution time to calculate inferred average FLOPS/s")
+    parser.add_argument("-t", "--program-time", type=float, help="Specify the total program execution time to calculate inferred average FLOPS/s")
+    parser.add_argument("--gpu-max-tflops", type=float, help="Specify the maximum TFLOPS/s of the GPU to calculate peak performance percentage")
 
     vendor_group = parser.add_argument_group("CSV Input Format")
     vendor_group = vendor_group.add_mutually_exclusive_group(required=True)
@@ -107,32 +109,36 @@ def _main():
         print(dataframe)
     
     # Fused multiply-add instructions count as 2 floating point operations in one
-    dataframe["op_ffma"] *= 2
-    dataframe["op_dfma"] *= 2
+    dataframe["sm/op_ffma/sum"] *= 2
+    dataframe["sm/op_dfma/sum"] *= 2
     
     # If we double the double-precision op counts we can sum them all as equal
-    dataframe["op_dadd"] *= 2
-    dataframe["op_dmul"] *= 2
-    dataframe["op_dfma"] *= 2
+    dataframe["sm/op_dadd/sum"] *= 2
+    dataframe["sm/op_dmul/sum"] *= 2
+    dataframe["sm/op_dfma/sum"] *= 2
 
-    dataframe["op_dadd"] *= dataframe["cycles_elapsed"]
-    dataframe["op_dmul"] *= dataframe["cycles_elapsed"]
-    dataframe["op_dfma"] *= dataframe["cycles_elapsed"]
-    dataframe["op_fadd"] *= dataframe["cycles_elapsed"]
-    dataframe["op_fmul"] *= dataframe["cycles_elapsed"]
-    dataframe["op_ffma"] *= dataframe["cycles_elapsed"]
+    # dataframe["sm/op_dadd/sum"] *= dataframe["cycles_elapsed"]
+    # dataframe["sm/op_dmul/sum"] *= dataframe["cycles_elapsed"]
+    # dataframe["sm/op_dfma/sum"] *= dataframe["cycles_elapsed"]
+    # dataframe["sm/op_fadd/sum"] *= dataframe["cycles_elapsed"]
+    # dataframe["sm/op_fmul/sum"] *= dataframe["cycles_elapsed"]
+    # dataframe["sm/op_ffma/sum"] *= dataframe["cycles_elapsed"]
 
-    flops = (sum(sum(dataframe[op]) for op in ("op_fadd", "op_fmul", "op_ffma", "op_dadd", "op_dmul", "op_dfma"))) #("op_dadd", "op_dmul", "op_dfma")))
+    flops = (sum(sum(dataframe[op]) for op in ("sm/op_fadd/sum", "sm/op_fmul/sum", "sm/op_ffma/sum", "sm/op_dadd/sum", "sm/op_dmul/sum", "sm/op_dfma/sum"))) #("op_dadd", "op_dmul", "op_dfma")))
     print(f"Total number of floating point operations executed (inferred): {flops}")
 
-    if "time_duration" in dataframe.columns:
-        print(f"Total GPU time elapsed: {sum(dataframe["time_duration"]) * 1e-9}s")
-        flops_broadcast_per_second = (sum(sum(dataframe[op] / (dataframe["time_duration"] * 1e-9)) for op in ("op_fadd", "op_fmul", "op_ffma", "op_dadd", "op_dmul", "op_dfma"))) #("op_dadd", "op_dmul", "op_dfma")))
+    if "gpu/time_duration/sum" in dataframe.columns:
+        print(f"WARNING: take these during GPU execution metrics with a grain of salt, as the gpu time duration measured by nsight compute includes some profiling overhead.")
+        print(f"Total GPU time elapsed: {sum(dataframe["gpu/time_duration/sum"]) * 1e-9}s")
+        flops_broadcast_per_second = (sum(sum(dataframe[op] / (dataframe["gpu/time_duration/sum"] * 1e-9)) for op in ("sm/op_fadd/sum", "sm/op_fmul/sum", "sm/op_ffma/sum", "sm/op_dadd/sum", "sm/op_dmul/sum", "sm/op_dfma/sum"))) #("op_dadd", "op_dmul", "op_dfma")))
         print(f"Final average FLOPS/s during GPU execution: {flops_broadcast_per_second * 1e-12 / dataframe.shape[0]} TFLOPS/s")
-        print(f"Final average FLOPS/s during GPU execution: {flops * 1e-12 / sum(dataframe["time_duration"] * 1e-9)} TFLOPS/s")
+        print(f"Final average FLOPS/s during GPU execution: {flops * 1e-12 / sum(dataframe["gpu/time_duration/sum"] * 1e-9)} TFLOPS/s")
+        print(f"END WARNING")
     
     if args.program_time:
-        print(f"Final average overall FLOPS/s: {flops * 1e-12 / args.program_time}")
+        print(f"Final average overall FLOPS/s based on an execution time of {args.program_time}s: {flops * 1e-12 / args.program_time} TFLOPS/s")
+        if args.gpu_max_tflops:
+            print(f"Final peak performance percentage based on a maximum of {args.gpu_max_tflops} TFLOPS/s: {flops * 1e-12 / args.program_time / args.gpu_max_tflops * 100:.2f}%")
 
 if __name__ == '__main__': 
     _main()
