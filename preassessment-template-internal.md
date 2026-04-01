@@ -9,11 +9,11 @@ Summary: For assessors working on SHAREing and ARC-Durham.
 
 > [!NOTE]
 >
-> 1. Guidance is throughout this template is provided using information boxes, along with example text and placeholders. Please remove the information boxes and replace the example text for your report.
+> 1. Guidance is throughout this template is provided using information boxes, along with example text and placeholders. Please remove the information boxes and replace the example text in your report.
 >
-> 2. The section headings are numbered to correspond to the performance analysis workbook section 3 (i.e. Section 1 in the workbook is Section 1 in this template), but the workbook should not be necessary to perform a pre-assessment using this template.
+> 2. The template is based on Section 3 of the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). However, the guidebook should not be necessary to perform the pre-assessment using this template.
 >
-> 3. This template is not exhaustive, but should provide the framework for completing a pre-assessment using the information submitted via the pre-assessment submission form, [linked here](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter of the project for assessment.
+> 3. This template is not exhaustive, but should provide the framework for completing a pre-assessment using the information submitted via the [assessment submission form](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter.
 
 ## Assessment objective
 
@@ -34,15 +34,20 @@ A test submission of `<benchmark_name>`, available at `<repository/website>`. Ve
 
 - [ ] [1: Benchmark setup](#1-benchmark-setup)
 - [ ] [2: Description of working environment](#2-description-of-working-environment)
-- [ ] [3: Compiler setup](#3-compiler-setup)
-- [ ] [4: Code complexity](#4-code-complexity)
+- [ ] [3: Compiler setup and optimisations](#3-compiler-setup-and-optimisations)
+- [ ] [4: Computational complexity and scaling](#4-computational-complexity-and-scaling)
 - [ ] [5: Memory, storage and I/O](#5-memory-storage-and-io)
+- [ ] [6: Additional comments from submitter](#6-additional-comments-from-submitter)
+- [ ] [7: Pre-assessment outcome](#7-assessment-outcome)
 
 ## 1: Benchmark setup
 
 >[!IMPORTANT]
-> This section should be composed of information provided by the submitter, unless there is a specific issue with compatibility on the machine the assessor is testing on, in which case additional information should be noted. The 4th subsection (1.4) should comment on the suitability of the benchmark in terms of expected capacity for weak/strong scaling testing.
->
+> This section should be composed of information provided by the submitter, unless there is a specific issue with compatibility on the machine the assessor is testing on, in which case additional information should be noted. The [third subsection](#problem-size-scaling) should comment on the suitability of the benchmark in terms of expected capacity for weak/strong scaling testing.
+
+### Fetch and build program
+
+>[!IMPORTANT]
 > Provide commands to fetch and build program. Include version numbers where possible for the main program.
 
 The submitter has requested an assessment of `<repository/program_name>`, version `<version_number`>/branch `<branch_name>`. It can be fetched/installed as follows:
@@ -59,6 +64,8 @@ git clone -p <branch_name> <repository> && make release
 >[!IMPORTANT]
 > Provide commands to fetch benchmark, unless provided directly by submitter, in which case attach with this document.
 
+### Fetch and run benchmark
+
 The benchmark can be obtained from:
 
 ```bash
@@ -74,6 +81,8 @@ To run the benchmark:
 cd <benchmark_folder>
 mpirun -np 24 <program_executable> <benchmark_name> <output_file>
 ```
+
+### Problem size scaling
 
 >[!IMPORTANT]
 > Provide commentary on possibility of scaling the problem up and down, both in strong (changing number of work units (e.g. CPUs) but keeping constant problem size) and weak (changing problem size but keeping number of work units the same) contexts. If there is existing scaling information (graphs or raw data) available attach the data to this report and add links here.
@@ -104,7 +113,12 @@ MemFree:        256995420 kB
 MemAvailable:   258291956 kB
 ```
 
-### Tools used for assessment
+### Libraries and modules
+
+>[!IMPORTANT]
+> Provide information on the libraries that need to be installed or modules that must be loaded based on the compilation information provided by the submitter.
+
+### Assessment tools
 
 > [!IMPORTANT]
 > Limit pre-assessment tools to very low runtime, mostly just focus on whether the program is running as expected. Do not check for correctness of benchmarks as that is domain specific knowledge.
@@ -130,10 +144,10 @@ MemAvailable:   258291956 kB
 
 <!-- markdownlint-enable MD029 -->
 
-## 3: Compiler setup
+## 3: Compiler setup and optimisations
 
 >[!IMPORTANT]
->Predominantly provided by submitter, include all which apply:
+> Based on the compilation information provided by submitter, comment on the following (where applicable):
 >
 > - package manager (e.g. `spack`)
 > - build toolchain (e.g. `cmake`)
@@ -142,17 +156,14 @@ MemAvailable:   258291956 kB
 > - additional accelerator libraries and versions (e.g. SYCL revision 11, Kokkos 5.1)
 > - any feature sets which are toggled on (e.g. vectorisation)
 >
-> Add additional information about convergence or correctness if provided by submitter.
+> Add additional information about the impact of optimisations on convergence or correctness of results if provided by submitter. Also include any issues you may face when building the program.
 
-```bash
-mkdir build && cd build
-cmake -DCMAKE_BULD_TYPE=RelWithDebInfo -DCMAKE_CXX_COMPILER=icpx ..
-```
+Build instructions from the user `<build_toolchain>` to build the `<program_name>` with `<optimisation_level>`.
 
 >[!tip]
-> MAQAO should present missed compiler optimisation opportunities. Increasing optimisation level may require the system to be reconverged to confirm accuracy. This may be outside the scope of the assessment.
+> MAQAO should present missed compiler optimisation opportunities. Increasing the optimisation level may require re-converging the system to confirm accuracy. This may be outside the scope of the assessment.
 
-## 4: Code complexity
+## 4: Computational complexity and scaling
 
 >[!IMPORTANT]
 > Add information about scaling provided by submitter:
@@ -182,3 +193,13 @@ The benchmark also outputs files totalling `<storage_size>`MB.
 > Comment on amount of I/O benchmark produces, excessive I/O will result in an inaccurate performance assessment and may result in rejection. Comment on when the I/O is performed.
 
 The benchmark writes to a file after every `<n>` iterations.
+
+## 6: Additional comments from submitter
+
+>[!IMPORTANT]
+> Include any additional information from the submitter that does not fit the previous sections.
+
+## 7: Pre-assessment outcome
+
+>[!IMPORTANT]
+> Indicate whether the assessment will proceed to the high-level stage. If the assessment is rejected here, comment on why and how to proceed.
