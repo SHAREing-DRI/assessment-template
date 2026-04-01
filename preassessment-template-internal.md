@@ -8,38 +8,35 @@ Summary: For assessors working on SHAREing and ARC-Durham.
 # Pre-assessment template
 
 > [!NOTE]
-> The section headings are numbered to correspond to the performance analysis workbook section 3 (i.e. Section 1 in the workbook is Section 1 in this template), but the workbook should not be necessary to perform a pre-assessment using this template.
 >
-> This template is not exhaustive, but should provide the framework for completing a pre-assessment using the information submitted via the pre-assessment submission form, [linked here](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter of the project for assessment.
+> 1. Guidance is throughout this template is provided using information boxes, along with example text and placeholders. Please remove the information boxes and replace the example text for your report.
+>
+> 2. The section headings are numbered to correspond to the performance analysis workbook section 3 (i.e. Section 1 in the workbook is Section 1 in this template), but the workbook should not be necessary to perform a pre-assessment using this template.
+>
+> 3. This template is not exhaustive, but should provide the framework for completing a pre-assessment using the information submitted via the pre-assessment submission form, [linked here](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter of the project for assessment.
 
-## Objective of pre-assessment
+## Assessment objective
 
 >[!IMPORTANT]
-> Test submission/internal review/external review. If part of a larger project or funding add that information here. Add assessor's name, optionally contact details.
+> Is this a test submission, internal review or external review? If part of a larger project or funding add that information here. You may also include the assessor's name, optionally with contact details.
 
-A test submission of `<benchmark_name>`, available at `<repository/website>`. Version tested `<version_number>` performed by `<assessor_name>` of `<assessor_affiliation>` on `<date>`.
+A test submission of `<benchmark_name>`, available at `<repository/website>`. Version tested `<version_number>` performed by `<assessor_name>` of `<assessor_affiliation>` on `<assessment_date>`.
 
-## Disclaimer for testing
+## Disclaimers
 
-This is not a commentary on code quality, but an indicator of the quality of the current SHAREing testing methodology as of this `<date>`.
+1. This is not a commentary on code quality, but an indicator of the quality of the current SHAREing testing methodology as of `<guidance_date>`.
+2. This forms only a preliminary assessment of submission suitability and does not guarantee a full assessment. The pre-assessment will be provided to the submitter with information on how to continue to assessment or rejection.
 
-## Disclaimer for assessment
-
-This forms only a preliminary assessment of submission suitability and does not guarantee a full assessment. The pre-assessment will be provided to the submitter with information on how to continue to assessment or rejection.
-
-## Sections completed
+## Table of contents
 
 >[!IMPORTANT]
 > Place `x` inside the box when complete to mark the checkbox
 
-- [ ] 1: Benchmark setup
-- [ ] 2: Description of working environment
-- [ ] 3: Compiler setup
-- [ ] 4: Code complexity
-- [ ] 5: I/O
-- [ ] 6: Hardware information
-- [ ] 7: Code Separation
-- [ ] 8: Historic optimisations
+- [ ] [1: Benchmark setup](#1-benchmark-setup)
+- [ ] [2: Description of working environment](#2-description-of-working-environment)
+- [ ] [3: Compiler setup](#3-compiler-setup)
+- [ ] [4: Code complexity](#4-code-complexity)
+- [ ] [5: Memory, storage and I/O](#5-memory-storage-and-io)
 
 ## 1: Benchmark setup
 
@@ -83,14 +80,31 @@ mpirun -np 24 <program_executable> <benchmark_name> <output_file>
 
 ## 2: Description of working environment
 
-### 1. Name of the computer/cluster
+### Hardware information
 
 >[!IMPORTANT]
 > For systems with different hardware resources, add the hardware information used, including where applicable the queue information if necessary. Comment on expected normal limit for the hardware, e.g. size of the largest interconnected set of nodes, or memory limitations.
 
 The `<cluster_name>` system based at `<university/organisation>` was used for this assessment.
 
-### 2. List Assessment tools used in pre-assessment and expected to be used in high level assessment
+>[!IMPORTANT]
+> Provide processor, memory and cache information as well as interconnect information if (e.g. Infiniband, NVlink - if across multiple nodes) of the system the assessment is to be performed on.
+
+AMD EPYC 7702 64-Core Processor on 1 node - Hamilton.
+
+```txt
+processor       : 0-63
+model name      : AMD EPYC 7702 64-Core Processor
+microcode       : 0x830107d
+cpu MHz         : 1996.204
+cache size      : 512 KB
+
+MemTotal:       263152912 kB   //~250GB per node
+MemFree:        256995420 kB
+MemAvailable:   258291956 kB
+```
+
+### Tools used for assessment
 
 > [!IMPORTANT]
 > Limit pre-assessment tools to very low runtime, mostly just focus on whether the program is running as expected. Do not check for correctness of benchmarks as that is domain specific knowledge.
@@ -100,7 +114,7 @@ The `<cluster_name>` system based at `<university/organisation>` was used for th
    - `<tool_2>`
 
 > [!IMPORTANT]
-> High level assessment techniques which are expected to be useful. Include global measures, such as wall time.
+> High level assessment tools and techniques which are expected to be useful, like global measures such as wall time.
 
 <!-- markdownlint-disable MD029 -->
 2. High-level assessment:
@@ -116,7 +130,7 @@ The `<cluster_name>` system based at `<university/organisation>` was used for th
 
 <!-- markdownlint-enable MD029 -->
 
-## 3: Compiler Setup
+## 3: Compiler setup
 
 >[!IMPORTANT]
 >Predominantly provided by submitter, include all which apply:
@@ -138,7 +152,7 @@ cmake -DCMAKE_BULD_TYPE=RelWithDebInfo -DCMAKE_CXX_COMPILER=icpx ..
 >[!tip]
 > MAQAO should present missed compiler optimisation opportunities. Increasing optimisation level may require the system to be reconverged to confirm accuracy. This may be outside the scope of the assessment.
 
-## 4: Code Complexity
+## 4: Code complexity
 
 >[!IMPORTANT]
 > Add information about scaling provided by submitter:
@@ -152,7 +166,7 @@ cmake -DCMAKE_BULD_TYPE=RelWithDebInfo -DCMAKE_CXX_COMPILER=icpx ..
 
 The `<parameter>` value can be varied to increase the problem size for scaling tests.
 
-## 5: Memory, Storage and I/O
+## 5: Memory, storage and I/O
 
 >[!IMPORTANT]
 > Comment on the expected in memory size of the program at runtime, including data. An estimate of this information should be provided as part of the submission. For jobs submitted to Hamilton as part of early assessment, the Hamilton dashboard can be used to gauge memory usage, see [Hamilton Portal Performance](https://www.durham.ac.uk/research/institutes-and-centres/advanced-research-computing/hamilton-supercomputer/usage/portal/performance/).
@@ -168,32 +182,3 @@ The benchmark also outputs files totalling `<storage_size>`MB.
 > Comment on amount of I/O benchmark produces, excessive I/O will result in an inaccurate performance assessment and may result in rejection. Comment on when the I/O is performed.
 
 The benchmark writes to a file after every `<n>` iterations.
-
-## 6: Hardware information
-
->[!IMPORTANT]
-> Provide processor, memory and cache information as well as interconnect information if (e.g. Infiniband, NVlink - if across multiple nodes) of the system the assessment is to be performed on.
-
-AMD EPYC 7702 64-Core Processor on 1 node - Hamilton.
-
-```txt
-processor       : 0-63
-model name      : AMD EPYC 7702 64-Core Processor
-microcode       : 0x830107d
-cpu MHz         : 1996.204
-cache size      : 512 KB
-
-MemTotal:       263152912 kB   //~250GB per node
-MemFree:        256995420 kB
-MemAvailable:   258291956 kB
-```
-
-## 7: Code separation
-
->[!tip]
-> Only if sufficient additional information about code layout is provided by submitter.
-
-## 8: Historic optimisations
-
->[!tip]
-> Only if sufficient additional information about code optimisation is provided by submitter.
