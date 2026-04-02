@@ -29,7 +29,7 @@ A test submission of `<benchmark_name>`, available at `<repository/website>`. Ve
 
 ## Table of contents
 
->[!IMPORTANT]
+>[!TIP]
 > Place `x` inside the box when complete to mark the checkbox
 
 - [ ] [1: Benchmark setup](#1-benchmark-setup)
@@ -38,7 +38,7 @@ A test submission of `<benchmark_name>`, available at `<repository/website>`. Ve
 - [ ] [4: Computational complexity and scaling](#4-computational-complexity-and-scaling)
 - [ ] [5: Memory, storage and I/O](#5-memory-storage-and-io)
 - [ ] [6: Additional comments from submitter](#6-additional-comments-from-submitter)
-- [ ] [7: Pre-assessment outcome](#7-assessment-outcome)
+- [ ] [7: Pre-assessment outcome](#7-pre-assessment-outcome)
 
 ## 1: Benchmark setup
 
@@ -98,20 +98,21 @@ The `<cluster_name>` system based at `<university/organisation>` was used for th
 
 >[!IMPORTANT]
 > Provide processor, memory and cache information as well as interconnect information if (e.g. Infiniband, NVlink - if across multiple nodes) of the system the assessment is to be performed on.
+The hardware details for `<cluster_name>` are `[available at](<URL>)`. This information is corroborated by running `cat /proc/cpuinfo` on one of the compute nodes via an interactive session.
 
-AMD EPYC 7702 64-Core Processor on 1 node - Hamilton.
+There are `<num_nodes>` compute nodes on the system:
 
-```txt
-processor       : 0-63
-model name      : AMD EPYC 7702 64-Core Processor
-microcode       : 0x830107d
-cpu MHz         : 1996.204
-cache size      : 512 KB
+| Specification       | per node                                                              |
+| ------------------- | --------------------------------------------------------------------- |
+| Processors          | `<num_procs>` $\times$ `[<processor_name>](<link-to-online-details>)` |
+| Clock speed per CPU | `<freq>`MHz                                                           |
+| Sockets             | `<num_sockets>`                                                       |
+| Cores               | `<num_cores>`                                                         |
+| RAM                 | `<memory_size>`GB `<memory_type>`                                     |
+| Local storage       | `<storage_size>`GB `<storage_type>`                                   |
 
-MemTotal:       263152912 kB   //~250GB per node
-MemFree:        256995420 kB
-MemAvailable:   258291956 kB
-```
+>[!TIP]
+> Add details that you can obtain from the system or online information about sockets, NUMA regions, interconnects and cache sizes.
 
 ### Libraries and modules
 
