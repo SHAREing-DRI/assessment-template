@@ -9,7 +9,7 @@ Summary: For assessors working on SHAREing and ARC-Durham.
 
 > [!NOTE]
 >
-> 1. Guidance is throughout this template is provided using information boxes, along with example text and placeholders. Please remove the information boxes and replace the example text in your report.
+> 1. Guidance throughout this template is provided using information boxes, along with example text and placeholders. The example text is not meant to be a complete comment, but a suggestion to get you started. Please remove the information boxes and replace the example text in your report.
 >
 > 2. The template is based on Section 3 of the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). However, the guidebook should not be necessary to perform the pre-assessment using this template.
 >
@@ -18,19 +18,19 @@ Summary: For assessors working on SHAREing and ARC-Durham.
 ## Assessment objective
 
 >[!IMPORTANT]
-> Is this a test submission, internal review or external review? If part of a larger project or funding add that information here. You may also include the assessor's name, optionally with contact details.
+> Is this a test submission, internal review or external review? If part of a larger project or funding, add that information here. You may also include your (the assessor's) name, optionally with contact details.
 
-A test submission of `<benchmark_name>`, available at `<repository/website>`. Version tested `<version_number>` performed by `<assessor_name>` of `<assessor_affiliation>` on `<assessment_date>`.
+A test submission of `<repository/website>`, version `<version_number>` using the `<benchmark_name>` benchmark. This assessment is performed by `<assessor_name>` of `<assessor_affiliation>` on `<assessment_date>`.
 
 ## Disclaimers
 
-1. This is not a commentary on code quality, but an indicator of the quality of the current SHAREing testing methodology as of `<guidance_date>`.
-2. This forms only a preliminary assessment of submission suitability and does not guarantee a full assessment. The pre-assessment will be provided to the submitter with information on how to continue to assessment or rejection.
+1. This report is not a commentary on code quality, but an indicator of the quality of the current SHAREing testing methodology as of `<guidance_date>`.
+2. The pre-assessment is only a preliminary assessment of submission suitability and does not guarantee a full assessment. It will be provided to the submitter with information on if the full-assessment will be undertaken or reasons for rejection.
 
 ## Table of contents
 
 >[!TIP]
-> Place `x` inside the box when complete to mark the checkbox
+> Place `x` inside the box when complete to mark the checkbox.
 
 - [ ] [1: Benchmark setup](#1-benchmark-setup)
 - [ ] [2: Description of working environment](#2-description-of-working-environment)
@@ -43,7 +43,7 @@ A test submission of `<benchmark_name>`, available at `<repository/website>`. Ve
 ## 1: Benchmark setup
 
 >[!IMPORTANT]
-> This section should be composed of information provided by the submitter, unless there is a specific issue with compatibility on the machine the assessor is testing on, in which case additional information should be noted. The [third subsection](#problem-size-scaling) should comment on the suitability of the benchmark in terms of expected capacity for weak/strong scaling testing.
+> This section should be composed of information provided by the submitter, unless there is a specific issue with compatibility on the machine the assessor is testing on, in which case additional information should be noted. The [third subsection](#problem-size-scaling) should comment on the suitability of the benchmark in terms of expected capacity for weak/strong scaling.
 
 ### Fetch and build program
 
@@ -58,11 +58,10 @@ spack install <program_name>@<version_number>
 
 # Example 2: Clone a specific branch of a repository
 git clone -p <branch_name> <repository> && make release
-   
 ```
 
 >[!IMPORTANT]
-> Provide commands to fetch benchmark, unless provided directly by submitter, in which case attach with this document.
+> Provide commands to fetch benchmark unless provided directly by the submitter.
 
 ### Fetch and run benchmark
 
@@ -82,10 +81,10 @@ cd <benchmark_folder>
 mpirun -np 24 <program_executable> <benchmark_name> <output_file>
 ```
 
-### Problem size scaling
+### Scaling problem size
 
 >[!IMPORTANT]
-> Provide commentary on possibility of scaling the problem up and down, both in strong (changing number of work units (e.g. CPUs) but keeping constant problem size) and weak (changing problem size but keeping number of work units the same) contexts. If there is existing scaling information (graphs or raw data) available attach the data to this report and add links here.
+> Comment on the possibility of scaling the problem up and down, both in strong (changing number of work units e.g. CPUs, but keeping the problem size constant) and weak (changing the problem size but keeping number of work units the same) contexts. If there is existing scaling information (graphs or raw data) available, attach the data to this report or add links.
 
 ## 2: Description of working environment
 
@@ -97,10 +96,9 @@ mpirun -np 24 <program_executable> <benchmark_name> <output_file>
 The `<cluster_name>` system based at `<university/organisation>` was used for this assessment.
 
 >[!IMPORTANT]
-> Provide processor, memory and cache information as well as interconnect information if (e.g. Infiniband, NVlink - if across multiple nodes) of the system the assessment is to be performed on.
-The hardware details for `<cluster_name>` are `[available at](<URL>)`. This information is corroborated by running `cat /proc/cpuinfo` on one of the compute nodes via an interactive session.
+> Provide processor, memory and cache information as well as interconnect information (e.g. Infiniband, NVlink - if across multiple nodes) of the system the assessment is to be performed on.
 
-There are `<num_nodes>` compute nodes on the system:
+The hardware details for `<cluster_name>` are `[available at](<URL>)`. This information is corroborated by running `cat /proc/cpuinfo` on one of the compute nodes via an interactive session. There are `<num_nodes>` compute nodes on the system:
 
 | Specification       | per node                                                              |
 | ------------------- | --------------------------------------------------------------------- |
@@ -122,7 +120,7 @@ There are `<num_nodes>` compute nodes on the system:
 ### Assessment tools
 
 > [!IMPORTANT]
-> Limit pre-assessment tools to very low runtime, mostly just focus on whether the program is running as expected. Do not check for correctness of benchmarks as that is domain specific knowledge.
+> Limit pre-assessment tools to those with very low runtime. Mostly just focus on whether the program is running as expected. Do not assess the results of the benchmark for correctness as that requires domain-specific knowledge.
 
 1. Pre-assessment:
    - `<tool_1>`
@@ -137,7 +135,7 @@ There are `<num_nodes>` compute nodes on the system:
    - `<tool_2>`
 
 >[!IMPORTANT]
-> If additional information is provided you can address low level assessment (will likely require privileges on host). Only address this section if confident enough domain information has been provided with respect to scaling in compute and memory with problem size.
+> If additional information is provided, you can address the low-level assessment that may be required, and if you may require privileges on the system. Only address this section if you confident that enough domain information has been provided, with respect to scaling of the compute and memory with the problem size.
 
 3. Low-level assessment:
    - `<tool_1>`
@@ -157,7 +155,7 @@ There are `<num_nodes>` compute nodes on the system:
 > - additional accelerator libraries and versions (e.g. SYCL revision 11, Kokkos 5.1)
 > - any feature sets which are toggled on (e.g. vectorisation)
 >
-> Add additional information about the impact of optimisations on convergence or correctness of results if provided by submitter. Also include any issues you may face when building the program.
+> Add additional information about the impact of optimisations on convergence or correctness of results if provided by the submitter. Also include any issues you may face when building the program.
 
 Build instructions from the user `<build_toolchain>` to build the `<program_name>` with `<optimisation_level>`.
 
@@ -181,7 +179,7 @@ The `<parameter>` value can be varied to increase the problem size for scaling t
 ## 5: Memory, storage and I/O
 
 >[!IMPORTANT]
-> Comment on the expected in memory size of the program at runtime, including data. An estimate of this information should be provided as part of the submission. For jobs submitted to Hamilton as part of early assessment, the Hamilton dashboard can be used to gauge memory usage, see [Hamilton Portal Performance](https://www.durham.ac.uk/research/institutes-and-centres/advanced-research-computing/hamilton-supercomputer/usage/portal/performance/).
+> Comment on the expected in memory size of the program at runtime, including data. An estimate of this information should be provided as part of the submission. For jobs submitted to Hamilton as part of early assessment, the Hamilton dashboard can be used to gauge memory usage (see [Hamilton Portal Performance](https://www.durham.ac.uk/research/institutes-and-centres/advanced-research-computing/hamilton-supercomputer/usage/portal/performance/)).
 
 According to the submitter, the expected memory required for the benchmark is `<memory_size>`GB.
 
