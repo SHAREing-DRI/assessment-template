@@ -1,3 +1,10 @@
+---
+License: Copyright © 2026 Durham University, SHAREing Project, MIT Licensed
+Creator: Emily Wilkinson
+Contributors: Emily Wilkinson
+Summary: High-level assessment report template
+---
+
 # <img src='../images/logo.svg' width=90 style="vertical-align:middle" /> SHAREing: High-level performance assessment report
 
 ## Setup Details

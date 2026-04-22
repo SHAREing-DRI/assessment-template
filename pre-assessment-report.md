@@ -1,8 +1,8 @@
 ---
-License: Durham University, All rights reserved.
+License: Copyright © 2026 Durham University, SHAREing Project, MIT Licensed
 Creator: Andrew Naden
 Contributors: Andrew Naden; Ananya Gangopadhyay
-Summary: For assessors working on SHAREing and ARC-Durham.
+Summary: Pre-assessment report template document
 ---
 
 # Pre-assessment template

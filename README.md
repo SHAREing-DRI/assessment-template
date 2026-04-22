@@ -1,3 +1,10 @@
+---
+License: Copyright © 2026 Durham University, SHAREing Project, MIT Licensed
+Creator: Thomas Flynn
+Contributors: Thomas Flynn, Emily Wilkinson
+Summary: High-level assessment report template
+---
+
 # <img src='./images/logo.svg' width=90 style="vertical-align:middle" /> SHAREing: High-level performance assessment notebook
 
 **This repository is in a very early stage of development**
@@ -104,6 +111,9 @@ However, if you have ideas of performance metrics which are necessary but missin
 ## Acknowledgements
 The initial development of the notebook was implemented by Ben Clark.
 Further work on the notebook was undertaken by Thomas Flynn, before it was rewritten as scripts.
-This project has received funding through the UKRI Digital Research Infrastructure Programme under grant UKRI1801 (SHAREing). 
+This project has received funding through the UKRI Digital Research Infrastructure Programme under grant UKRI1801 (SHAREing).
 
 <img src='./images/ukri.png' width=200 style="vertical-align:middle" /> 
+
+The files within the scripts directory are held with all rights reserved, and we plan to release them in the future.
+All other files in this repository are released under the [MIT License](./LICENSE).
