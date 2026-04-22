@@ -9,3 +9,5 @@ examples/*.html
 examples/*.log
 examples/*.pdf
 examples/*.tex
+
+.vscode
