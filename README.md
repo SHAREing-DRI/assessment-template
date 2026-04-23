@@ -115,5 +115,4 @@ This project has received funding through the UKRI Digital Research Infrastructu
 
 <img src='./images/ukri.png' width=200 style="vertical-align:middle" /> 
 
-The files within the scripts directory are held with all rights reserved, and we plan to release them in the future.
-All other files in this repository are released under the [MIT License](./LICENSE).
+All files in this repository are released under the [MIT License](./LICENSE).
