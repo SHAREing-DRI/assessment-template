@@ -7,6 +7,24 @@ Summary: High-level assessment report template
 
 # <img src='./images/logo.svg' width=90 style="vertical-align:middle" /> SHAREing: High-level performance assessment report
 
+> [!NOTE]
+>
+> 1. Guidance throughout this template is provided using information boxes, along with example text and placeholders. The example text is not meant to be a complete comment, but a suggestion to get you started. Please remove the information boxes and replace the example text in your report.
+>
+> 2. The template is based on Chapter 5 of the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook).
+>
+> 3. This template is not exhaustive, but should provide the framework for completing a high-level assessment using the information submitted via the [assessment submission form](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter.
+
+## Table of Contents
+
+1. [Setup Details](#setup-details)
+2. [Executive Summary](#executive-summary)
+3. [CPU Assessment](#cpu-assessment)
+4. [GPU Assessment](#gpu-assessment)
+5. [IO Assessment](#io-assessment)
+6. [Intra-node Assessment](#intra-node-assessment)
+7. [Inter-node Assessment](#inter-node-assessment)
+
 ## Setup Details
 * Program: 
 * Parallel model: 
@@ -15,8 +33,31 @@ Summary: High-level assessment report template
 * Compiler flags: 
 * Problem spec: 
 
-## CPU Analysis
-For a basic high-level analysis of CPU performance, we look for the floating-point operation rate compared to the theoretical rate for the CPU.
+## Executive Summary
+
+The following table collates the results of all below assessments. These scores are indicative only, and cannot truly be compared to one another meaningfully without taking into account domain knowledge and methodological differences between them.
+
+| Result | Score | Metric result |
+| ---------------------- | - | - |
+| CPU                    |   |   |
+| GPU                    |   |   |
+| IO                     |   |   |
+| Intra-node 80% (60%)   |   |   |
+| Inter-node 80% (60%)   |   |   |
+
+> [!IMPORTANT]
+>
+> Here the assessor should interpret the scores to provide a recommendation for which rubrics may merit further investigation in intermediate or lower level assessments.
+> An example of such a paragraph is included:
+>
+> In summary, we find no concerns with IO and CPU usage, with both above our 80% threshold.
+> The rapid drop in intra-node efficiency with a fall below the efficiency thresholds at 4 threads out of our testing range of 128 threads indicate a region where further study may be useful, especially since the system we tested on has its smallest non-uniform memory access (NUMA) domains being 4 cores in size.
+> Normally, we would expect that parallel efficiency would fall once the thread count exceeds the smallest NUMA domain due to hardware limitations, so it is likely there is actions we could take to improve the efficiency.
+
+<img src='images/summary.png' width=500 />
+
+## CPU Assessment
+For a basic high-level assessment of CPU performance, we look for the floating-point operation rate compared to the theoretical rate for the CPU.
 
 The hardware capabilities were determined with
 ```bash
@@ -81,21 +122,7 @@ Hence, our 80% threshold is at `X` cores and our 60% threshold is at `Y` cores. 
 
 <img src='images/intranode.png' width=500 />
 
-## Inter-node Analysis
-For a basic high-level analysis of inter-node performance, we perform a weak scaling by increasing problem size linearly with node allocation.
 
+## Inter-node Assessment
+For a basic high-level assessment of inter-node performance, we perform a weak scaling by increasing problem size linearly with node allocation.
 
-
-## Summary
-
-The following table collates the results of all above sections. These scores are indicative only, and cannot truly be compared to one another meaningfully without taking into account domain knowledge and methodological differences between them.
-
-| Result | Score | Metric result |
-| ---------------- | - | - |
-| CPU              |   |   |
-| GPU              |   |   |
-| IO               |   |   |
-| Intra-node (80%) |   |   |
-| Inter-node (80%) |   |   |
-
-<img src='images/summary.png' width=500 />
