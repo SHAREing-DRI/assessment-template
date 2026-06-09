@@ -104,6 +104,8 @@ We determine this software to have a GPU score of `X`.
 >
 > Here the assessor should add context and interpretation to the score to help the code owner understand what the assessment result means.
 > An example of such a paragraph is below:
+>
+> We determine this software to have a GPU score of 0.015%. This means that there may be potential to massively increase the software's performance by possibly more than 100x if the algorithm is suited to it. We highly recommend examining whether the work offloaded to the GPU can be either made to utilise the GPU more efficiently, or whether further work could be offloaded to the GPU to make more efficient use of the hardware. In order to determine what specific adjustments may apply, further study of the behaviour of the program is required.
 
 ## IO Assessment
 For a basic high-level assessment of IO performance, we look for the proportion of the runtime spent processing IO requests.
@@ -119,6 +121,8 @@ The IO utilisation ratio is `X`, and the IO score is `1-X`.
 >
 > Here the assessor should add context and interpretation to the score to help the code owner understand what the assessment result means.
 > An example of such a paragraph is below:
+>
+> The IO utilisation is 95% of the program's runtime. This indicates significant potential to increase performance if there are inefficiencies in IO utilisation. We would recommend examining whether there are duplicate or extraneous file reads and writes that could be removed.
 
 ## Intra-node Assessment
 For a basic high-level assessment of intra-node performance, we perform a strong scaling by fixing the problem size and increasing core allocation.
