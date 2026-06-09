@@ -76,8 +76,15 @@ $
 
 We determine this software to have a CPU score of `X`.
 
-## GPU Analysis
-For a basic high-level analysis of GPU performance, we look for the average occupancy of the GPU floating-point modules.
+> [!IMPORTANT]
+>
+> Here the assessor should add context and interpretation to the score to help the code owner understand what the assessment result means.
+> An example of such a paragraph is below:
+>
+> We determine this software to have a CPU score of 88%. Based on this, we expect there to be limited to no prospect for increases in performance based on CPU specific optimisations.
+
+## GPU Assessment
+For a basic high-level assessment of GPU performance, we look for the average occupancy of the GPU floating-point modules.
 
 The theoretical GPU compute rate is `X MFLOPS/s`.
 
@@ -93,8 +100,13 @@ $
 
 We determine this software to have a GPU score of `X`.
 
-## IO Analysis
-For a basic high-level analysis of IO performance, we look for the proportion of the runtime spent processing IO requests.
+> [!IMPORTANT]
+>
+> Here the assessor should add context and interpretation to the score to help the code owner understand what the assessment result means.
+> An example of such a paragraph is below:
+
+## IO Assessment
+For a basic high-level assessment of IO performance, we look for the proportion of the runtime spent processing IO requests.
 
 The IO time was determined with
 ```shell
@@ -103,8 +115,13 @@ $
 
 The IO utilisation ratio is `X`, and the IO score is `1-X`.
 
-## Intra-node Analysis
-For a basic high-level analysis of intra-node performance, we perform a strong scaling by fixing the problem size and increasing core allocation.
+> [!IMPORTANT]
+>
+> Here the assessor should add context and interpretation to the score to help the code owner understand what the assessment result means.
+> An example of such a paragraph is below:
+
+## Intra-node Assessment
+For a basic high-level assessment of intra-node performance, we perform a strong scaling by fixing the problem size and increasing core allocation.
 
 For this code, we tested with core counts in powers of 2 from 1 to 64.
 
@@ -122,7 +139,15 @@ Hence, our 80% threshold is at `X` cores and our 60% threshold is at `Y` cores. 
 
 <img src='images/intranode.png' width=500 />
 
+> [!IMPORTANT]
+>
+> Here the assessor should add context and interpretation to the score to help the code owner understand what the assessment result means.
+> An example of such a paragraph is below:
 
 ## Inter-node Assessment
 For a basic high-level assessment of inter-node performance, we perform a weak scaling by increasing problem size linearly with node allocation.
 
+> [!IMPORTANT]
+>
+> Here the assessor should add context and interpretation to the score to help the code owner understand what the assessment result means.
+> An example of such a paragraph is below:
