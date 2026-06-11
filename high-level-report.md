@@ -52,7 +52,7 @@ The following table collates the results of all below assessments. These scores 
 >
 > In summary, we find no concerns with IO and CPU usage, with both above our 80% threshold.
 > The rapid drop in intra-node efficiency with a fall below the efficiency thresholds at 4 threads out of our testing range of 128 threads indicate a region where further study may be useful, especially since the system we tested on has its smallest non-uniform memory access (NUMA) domains being 4 cores in size.
-> Normally, we would expect that parallel efficiency would fall once the thread count exceeds the smallest NUMA domain due to hardware limitations, so it is likely there is actions we could take to improve the efficiency.
+> Normally, we would expect that parallel efficiency would fall once the thread count exceeds the smallest NUMA domain due to hardware limitations, so it is likely there are actions we could take to improve the efficiency.
 
 <img src='images/summary.png' width=500 />
 
