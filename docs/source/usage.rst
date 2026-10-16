@@ -112,7 +112,7 @@ In the ``intranode`` mode, the script can take data input from the standard inpu
 input is a table which can be in CSV or Markdown format. Suppose we have the following data saved as ``times.csv``:
 
 .. code-block::
-
+    Cores, Times
     1, 29.995
     2, 18.23
     4, 10.74
@@ -137,15 +137,15 @@ and pasting the data when prompted. The script can also generate a Markdown tabl
 
 .. code-block:: md
 
-    | Thread count | Time (s) | Parallel Efficiency |
-    |--------------|----------|---------------------|
-    | 1            | 29.995   | 1.000               |
-    | 2            | 18.230   | 0.823               |
-    | 4            | 10.740   | 0.698               |
-    | 8            | 10.330   | 0.363               |
-    | 16           | 9.1307   | 0.205               |
-    | 32           | 8.5401   | 0.110               |
-    | 64           | 7.4589   | 0.063               |
+    |   # Cores/threads |   Time (s) |   Parallel efficiency (%) |
+    |------------------:|-----------:|--------------------------:|
+    | 1                 | 29.995     | 1.000                     |
+    | 2                 | 18.230     | 0.823                     |
+    | 4                 | 10.740     | 0.698                     |
+    | 8                 | 10.330     | 0.363                     |
+    | 16                | 9.1307     | 0.205                     |
+    | 32                | 8.5401     | 0.110                     |
+    | 64                | 7.4589     | 0.063                     |
 
 The script can also be provided a Markdown table in the above format as the input just like the CSV table.
 

@@ -116,6 +116,7 @@ In the `intranode` or `internode` modes, the script can take data input from the
 The input is a table which can be in CSV or Markdown format. Suppose we have the following data saved as `times.csv`:
 
 ```csv
+Cores, Times
 1, 29.995
 2, 18.23
 4, 10.74
@@ -129,25 +130,25 @@ where the first column is the core count and the second is the time in seconds. 
 by running:
 
 ```shell
-$ ./high-level-plots.py intranode --graph # or internode
+./high-level-plots.py intranode --graph # or internode
 ```
 
 and pasting the data when prompted. The script can also generate a Markdown table which can be copied to the report:
 
 ```shell
-$ cat times.csv | ./high-level-plots.py intranode -gmd --markdown-file=stdout # or internode
+cat times.csv | ./high-level-plots.py intranode -gmd --markdown-file=stdout # or internode
 ```
 
 ```md
-| Thread count | Time (s) | Parallel Efficiency |
-|--------------|----------|---------------------|
-| 1            | 29.995   | 1.000               |
-| 2            | 18.230   | 0.823               |
-| 4            | 10.740   | 0.698               |
-| 8            | 10.330   | 0.363               |
-| 16           | 9.1307   | 0.205               |
-| 32           | 8.5401   | 0.110               |
-| 64           | 7.4589   | 0.063               |
+|   # Cores/threads |   Time (s) |   Parallel efficiency (%) |
+|------------------:|-----------:|--------------------------:|
+| 1                 | 29.995     | 1.000                     |
+| 2                 | 18.230     | 0.823                     |
+| 4                 | 10.740     | 0.698                     |
+| 8                 | 10.330     | 0.363                     |
+| 16                | 9.1307     | 0.205                     |
+| 32                | 8.5401     | 0.110                     |
+| 64                | 7.4589     | 0.063                     |
 ```
 
 The script can also be provided a Markdown table in the above format as the input just like the CSV table.
@@ -205,6 +206,6 @@ Thomas Flynn, before it was rewritten as scripts. This project has received fund
 Infrastructure Programme under grant UKRI1801 (SHAREing).
 
 <!--suppress CheckImageSize -->
-<img src='./images/ukri.png' width=200 style="vertical-align:middle" alt="UKRI logo"/> 
+<img src='./images/ukri.png' width=200 style="vertical-align:middle" alt="UKRI logo"/>
 
 All files in this repository are released under the [MIT License](./LICENSE).
