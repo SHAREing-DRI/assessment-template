@@ -7,7 +7,6 @@ Summary: High-level assessment report template
 
 # <img src='./images/logo.svg' width=90 style="vertical-align:middle" alt="SHAREing logo"/>SHAREing: High-level performance assessment report template
 
->
 > [!NOTE]
 >
 > 1. Guidance throughout this template is provided using information boxes, along with example text and placeholders.
@@ -51,18 +50,18 @@ the [performance assessment guidebook](https://shareing-dri.github.io/assets/pdf
 ## Table of contents
 
 - [SHAREing: High-level performance assessment report template](#shareing-high-level-performance-assessment-report-template)
-    - [Table of contents](#table-of-contents)
-    - [1. Setup Details](#1-setup-details)
-        - [1.1 Programming model](#11-programming-model)
-        - [1.2 SLURM configuration](#12-slurm-configuration)
-        - [1.3 Base input](#13-base-input)
-    - [2. Core-level assessment](#2-core-level-assessment)
-    - [3. Intra-node assessment](#3-intra-node-assessment)
-    - [4. Inter-node assessment](#4-inter-node-assessment)
-    - [5. GPU-performance assessment](#5-gpu-performance-assessment)
-    - [6. I/O Assessment](#6-io-assessment)
-    - [7. Summary](#7-summary)
-    - [8. High-level assessment outcome](#8-high-level-assessment-outcome)
+  - [Table of contents](#table-of-contents)
+  - [1. Setup Details](#1-setup-details)
+    - [1.1 Programming model](#11-programming-model)
+    - [1.2 SLURM configuration](#12-slurm-configuration)
+    - [1.3 Base input](#13-base-input)
+  - [2. Core-level assessment](#2-core-level-assessment)
+  - [3. Intra-node assessment](#3-intra-node-assessment)
+  - [4. Inter-node assessment](#4-inter-node-assessment)
+  - [5. GPU-performance assessment](#5-gpu-performance-assessment)
+  - [6. I/O Assessment](#6-io-assessment)
+  - [7. Summary](#7-summary)
+  - [8. High-level assessment outcome](#8-high-level-assessment-outcome)
 
 ## 1. Setup Details
 
@@ -72,7 +71,6 @@ remove subheadings based on what is relevant for the assessment and update the T
 
 ### 1.1 Programming model
 
->
 > [!IMPORTANT]
 > Indicate the programming model (s) being assessed in this report e.g. OpenMP+MPI, MPI+GPU, OpenMP GPU offloading etc.
 
@@ -81,7 +79,6 @@ rank per NUMA domain preference.
 
 ### 1.2 SLURM configuration
 
->
 > [!IMPORTANT]
 > Indicate the SLURM configuration (s) used for running the tests. Here you can point out the general configurations
 > common among all runs, while the specific setups per rubric can be indicated in the relevant sections. This section
@@ -98,14 +95,12 @@ All analyses were performed on an exclusive node on `<cluster_name>` with the fo
 #SBATCH --distribution=block:block
 ```
 
->
 > [!IMPORTANT]
 > Indicate other relevant settings, such as OpenMP environment variables, `likwid` arguments etc. here or under another
 > subheading.
 
 ### 1.3 Base input
 
->
 > [!IMPORTANT]
 > Indicate the general input settings used for running the tests. Rubric-specific settings such as problem size
 > variables can be indicated in their relevant sections. This section can be removed if not applicable.
@@ -118,7 +113,6 @@ The following is the input configuration used for serial runs:
 
 ## 2. Core-level assessment
 
->
 > [!IMPORTANT]
 > Include a brief description of the core-level rubric. Provide configurations and `likwid` utilities used to determine
 > the core-level performance.
@@ -139,7 +133,6 @@ observed floating point rate, with the [serial input indicated earlier](#13-base
 likwid-perfctr -f -C 0 -g FLOPS_DP $EXEC $INPUT
 ```
 
->
 > [!IMPORTANT]
 > Add the theoretical and observed floating point rates in the table below.
 >
@@ -158,14 +151,13 @@ as follows:
 |----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
 | $C_{core} \ge$ 0.8         | <span style="background-color: #0080005f">Core performance does not require further analysis.</span>                                                                     |                                    |
 | 0.8 $\gt C_{core} \ge$ 0.6 | <span style="background-color: #ffff005c">Core performance may require further analysis as it may not be effectively using the hardware to its maximum potential.</span> |                                    |
-| 0.6 $\gt C_{core}$         | <span style="background-color: #ff00004e">Core performance requires in-depth analysis.</span>                                                                            | $C_{core} \approx$ `<core_metric>` 
+| 0.6 $\gt C_{core}$         | <span style="background-color: #ff00004e">Core performance requires in-depth analysis.</span>                                                                            | $C_{core} \approx$ `<core_metric>` |
 
 > [!IMPORTANT]
 > Place the core-level score in the correct range. Contextualise and elaborate on the classification of the score.
 
 ## 3. Intra-node assessment
 
->
 > [!IMPORTANT]
 > Include a brief description of the intra-node rubric. Provide details on the programming model and the problem size
 > used, how the core counts were varied, MPI rank, GPU and OpenMP thread assignments etc. for this code and assessment.
@@ -303,8 +295,11 @@ The following command was used to obtain the metrics required:
 
 ```bash
 # Change accordingly for the code being assessed
-ncu --metrics "regex:ˆsm_.*d_op_(d|f[ˆp]|h).*\\.sum$" --csv --log-file out.csv $EXEC $INPUT
+ncu --metrics "regex:sm__sass_thread_inst_executed_op_[A-Za-z]+_pred_on\.sum$" --csv --log-file gpu-metrics.csv $EXEC $INPUT
 ```
+
+> [!TIP]
+> For GPU + MPI configurations, include the `--target-processes all` flag for `ncu`.
 
 | Metric                                              | # operations |
 |-----------------------------------------------------|--------------|
@@ -320,7 +315,6 @@ ncu --metrics "regex:ˆsm_.*d_op_(d|f[ˆp]|h).*\\.sum$" --csv --log-file out.csv
 
 The total runtime for the configuration without profiling was `<gpu_runtime>`.
 
->
 > [!IMPORTANT]
 > Total the number of operations for each category and use the runtime without profiling to get the observed floating
 > point rate. Add that to the table below along with the theoretical rate from the specifications of the GPU being used.
