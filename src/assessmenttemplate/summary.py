@@ -107,7 +107,7 @@ def summary_add_args(main_parser):
     """
     parser = main_parser.add_parser("summary",
                                     description=f"Generate a spiderweb diagram or bar graph for the SHAREing "
-                                                "high-level performance assessment." + summary_main.__doc__)
+                                                "high-level performance assessment.")
 
     parser.add_argument("-b", "--bar", action="store_true", help="Output a bar chart instead of a spiderweb.")
 

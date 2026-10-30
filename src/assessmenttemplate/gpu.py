@@ -71,7 +71,7 @@ def gpu_add_args(main_parser):
     """
     main_parser.add_parser("gpu",
                            description="Compute the GPU score from the metrics collected from Nsight Compute for the "
-                                       "SHAREing high-level performance assessment." + gpu_main.__doc__)
+                                       "SHAREing high-level performance assessment.")
 
 
 def gpu_parse_args(unprocessed_args):

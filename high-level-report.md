@@ -50,18 +50,18 @@ the [performance assessment guidebook](https://shareing-dri.github.io/assets/pdf
 ## Table of contents
 
 - [SHAREing: High-level performance assessment report template](#shareing-high-level-performance-assessment-report-template)
-  - [Table of contents](#table-of-contents)
-  - [1. Setup Details](#1-setup-details)
-    - [1.1 Programming model](#11-programming-model)
-    - [1.2 SLURM configuration](#12-slurm-configuration)
-    - [1.3 Base input](#13-base-input)
-  - [2. Core-level assessment](#2-core-level-assessment)
-  - [3. Intra-node assessment](#3-intra-node-assessment)
-  - [4. Inter-node assessment](#4-inter-node-assessment)
-  - [5. GPU-performance assessment](#5-gpu-performance-assessment)
-  - [6. I/O Assessment](#6-io-assessment)
-  - [7. Summary](#7-summary)
-  - [8. High-level assessment outcome](#8-high-level-assessment-outcome)
+    - [Table of contents](#table-of-contents)
+    - [1. Setup Details](#1-setup-details)
+        - [1.1 Programming model](#11-programming-model)
+        - [1.2 SLURM configuration](#12-slurm-configuration)
+        - [1.3 Base input](#13-base-input)
+    - [2. Core-level assessment](#2-core-level-assessment)
+    - [3. Intra-node assessment](#3-intra-node-assessment)
+    - [4. Inter-node assessment](#4-inter-node-assessment)
+    - [5. GPU-performance assessment](#5-gpu-performance-assessment)
+    - [6. I/O Assessment](#6-io-assessment)
+    - [7. Summary](#7-summary)
+    - [8. High-level assessment outcome](#8-high-level-assessment-outcome)
 
 ## 1. Setup Details
 
@@ -295,7 +295,7 @@ The following command was used to obtain the metrics required:
 
 ```bash
 # Change accordingly for the code being assessed
-ncu --metrics "regex:sm__sass_thread_inst_executed_op_[A-Za-z]+_pred_on\.sum$" --csv --log-file gpu-metrics.csv $EXEC $INPUT
+ncu --metrics "regex:sm__sass_thread_inst_executed_op_[A-Za-z]+_pred_on\.sum$" --csv --log-file ncu_metrics.csv $EXEC $INPUT
 ```
 
 > [!TIP]
