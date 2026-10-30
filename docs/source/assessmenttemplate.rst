@@ -9,6 +9,14 @@ assessmenttemplate.scaling module
    :undoc-members:
    :show-inheritance:
 
+assessmenttemplate.gpu module
+-----------------------------
+
+.. automodule:: assessmenttemplate.gpu
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 assessmenttemplate.summary module
 ---------------------------------
 

@@ -51,7 +51,7 @@ assessment with the ``high-level-plots.py`` script :
     Tools to generate plots for the high-level assessment.
 
     positional arguments:
-      {intranode,internode,summary}
+      {intranode,internode,gpu,summary}
                             Mode pertaining to the high-level rubric for which the plots are to be generated.
 
     options:
@@ -138,6 +138,7 @@ generate it along with saving the graph to file, the following commands can be u
 
     cat intranode_times.csv | ./high-level-plots.py -d intranode -mg --markdown-file=stdout
     # N.B. `-gm` will not work as the `m` will be interpreted as an input to `-g`
+
 .. code-block:: md
 
     |   # Cores/threads |   Time (s) |   Parallel efficiency (%) |
@@ -169,6 +170,57 @@ The ``scaling`` module contains three useful functions which could be used for o
 
 Each function is passed the times as a list of tuples of core count and time taken.
 
+.. _gpu:
+
+=======
+``gpu``
+=======
+
+.. warning::
+    The module can currently only be used for NVIDIA GPUs.
+
+The ``gpu`` module contains functions that process the metrics generated
+using the `Nsight Compute <https://developer.nvidia.com/nsight-compute>`_ profiling tool for NVIDIA GPUs for the GPU
+assessment.
+
+.. code-block::
+
+    usage: high-level-plots.py gpu [-h]
+
+    Compute the GPU score from the metrics collected from Nsight Compute for the SHAREing high-level performance assessment.
+
+    options:
+      -h, --help  show this help message and exit
+
+The CSV generated from the tool (`as described here <../../high-level-report.md>`_) can be provided as input to the module as follows:
+
+.. code-block:: bash
+
+    cat ncu_metrics.csv | ./high-level-plots.py --output=stdout gpu
+
+The module will then parse the input, filter for the `relevant metrics <../../high-level-report.md>`_, compute the total number of operations in the
+profiled program, and produce a formatted Markdown table of the metrics:
+
+.. code-block:: md
+
+    | Metric                                              |       Value | Weight   |   # operations |
+    |:----------------------------------------------------|------------:|:---------|---------------:|
+    | `sm__sass_thread_inst_executed_op_dadd_pred_on.sum` |  1391994368 | 2.0      |    2.78399e+09 |
+    | `sm__sass_thread_inst_executed_op_dfma_pred_on.sum` | 16175594696 | 4.0      |    6.47024e+10 |
+    | `sm__sass_thread_inst_executed_op_dmul_pred_on.sum` |  6916239417 | 2.0      |    1.38325e+10 |
+    | `sm__sass_thread_inst_executed_op_fadd_pred_on.sum` |           0 | 1.0      |              0 |
+    | `sm__sass_thread_inst_executed_op_ffma_pred_on.sum` |    54003200 | 2.0      |    1.08006e+08 |
+    | `sm__sass_thread_inst_executed_op_fmul_pred_on.sum` |           0 | 1.0      |              0 |
+    | `sm__sass_thread_inst_executed_op_hadd_pred_on.sum` |           0 | 0.5      |              0 |
+    | `sm__sass_thread_inst_executed_op_hfma_pred_on.sum` |   139462784 | 1.0      |    1.39463e+08 |
+    | `sm__sass_thread_inst_executed_op_hmul_pred_on.sum` |           0 | 0.5      |              0 |
+    | Total                                               | 24677294465 | N/A      |    8.15663e+10 |
+
+The ``# operations`` value for ``Total`` is then used to compute the final GPU metric. The produced table, which can be
+printed to the terminal, written to the default file (``gpu_metrics.md``) with ``--default/-d`` or to one provided by the
+user via ``--output/-o``, can be copied to the high-level assessment report.
+
+
 .. _summary:
 
 ===========
@@ -181,13 +233,12 @@ The ``summary`` module contains functions to generate the rubric summary graphic
 
     usage: high-level-plots.py summary [-h] [-b]
 
-    Generate a spiderweb diagram or bar graph for the SHAREing high-level performance assessment. Processes parsed commandline arguments and the input table containing summary metrics per rubric. Input can be either a Markdown
-    table or a CSV. Produces spiderweb plot and a Markdown formatted table of the summary metrics per rubric as outputs. :param unprocessed_args: Arguments from the parser to be further processed for the "summary" mode
+    Generate a spiderweb diagram or bar graph for the SHAREing high-level performance assessment.
 
     options:
       -h, --help  show this help message and exit
       -b, --bar   Output a bar chart instead of a spiderweb.
 
-When called with the ``summary`` mode, the ``high-level-plots.py`` script takes data input from the standard input, unix
-pipe or input file the same way as the ``intranode`` mode, as either a CSV or Markdown table. It accepts an arbitrary
+When called with the ``summary`` mode, the ``high-level-plots.py`` script takes data input from the standard input, UNIX
+pipe or input file, as either a CSV or Markdown table. It accepts an arbitrary
 number of rows of "metric, score".
