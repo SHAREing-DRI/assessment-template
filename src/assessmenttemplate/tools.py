@@ -48,10 +48,4 @@ def read_input_table(args) -> pd.DataFrame:
 
     table = pd.read_csv(StringIO("\n".join(lines)))
 
-    # Drop any extra data
-    to_drop = 3 if args.mode == "internode" else 2
-    if args.verbose and args.mode == "internode":
-        print("Keeping three columns as expected for internode")
-    table = table.drop(table.columns[to_drop:], axis=1)
-
     return table

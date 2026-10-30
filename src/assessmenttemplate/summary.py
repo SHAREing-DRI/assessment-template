@@ -162,6 +162,9 @@ def summary_main(unprocessed_args):
 
     table = read_input_table(args)
 
+    # Drop any extra data
+    table = table.drop(table.columns[2:], axis=1)
+
     # Rename columns incase alternative names used
     table.columns = ["Rubric", "Score"]
 
