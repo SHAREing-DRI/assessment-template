@@ -262,6 +262,12 @@ def scaling_main(unprocessed_args):
         print("STATUS: processing input")
 
     table = read_input_table(args)
+    
+    # Drop any extra data
+    to_drop = 3 if args.mode == "internode" else 2
+    if args.verbose and args.mode == "internode":
+        print("Keeping three columns as expected for internode")
+    table = table.drop(table.columns[to_drop:], axis=1)
 
     # Rename columns incase alternative names used
     if args.mode == "intranode":

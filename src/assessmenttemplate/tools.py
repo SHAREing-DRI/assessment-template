@@ -46,12 +46,10 @@ def read_input_table(args) -> pd.DataFrame:
     else:
         print("Assuming CSV input")
 
-    table = pd.read_csv(StringIO("\n".join(lines)))
+    # For the ncu metrics to remove the header lines
+    while lines[0][:2] == "==":
+        del lines[0]
 
-    # Drop any extra data
-    to_drop = 3 if args.mode == "internode" else 2
-    if args.verbose and args.mode == "internode":
-        print("Keeping three columns as expected for internode")
-    table = table.drop(table.columns[to_drop:], axis=1)
+    table = pd.read_csv(StringIO("\n".join(lines)))
 
     return table

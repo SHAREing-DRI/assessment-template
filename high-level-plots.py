@@ -4,6 +4,7 @@ import argparse as ap
 import os
 import assessmenttemplate.scaling as scaling
 import assessmenttemplate.summary as summary
+import assessmenttemplate.gpu as gpu
 
 
 def _main():
@@ -54,12 +55,15 @@ def _main():
     # Add plots per rubric/mode
     scaling.scaling_add_args(sub_parsers)
     scaling.scaling_add_args(sub_parsers, scaling_rubric="internode")
+    gpu.gpu_add_args(sub_parsers)
     summary.summary_add_args(sub_parsers)
 
     args = parser.parse_args()
 
     if args.mode == "summary":
         summary.summary_main(args)
+    elif args.mode == "gpu":
+        gpu.gpu_main(args)
     else:
         scaling.scaling_main(args)
 
