@@ -4,7 +4,7 @@ The following are hardware tables for systems based at Durham which are frequent
 
 ## Hamilton
 
-The hardware details for Hamilton are [available here](https://www.durham.ac.uk/research/institutes-and-centres/advanced-research-computing/hamilton-su/computer/systems/). This information is corroborated by running `cat /proc/cpuinfo` on one of the compute nodes via an interactive session:
+The hardware details for Hamilton are [available here](https://www.durham.ac.uk/research/institutes-and-centres/advanced-research-computing/hamilton-su/computer/systems/). This information is corroborated by running `cat /proc/cpuinfo` and `lspci` on one of the compute nodes via an interactive session:
 
 | Specification | Details |
 | -------------- | ------------------------------------------------ |
@@ -16,12 +16,12 @@ The hardware details for Hamilton are [available here](https://www.durham.ac.uk/
 | NUMA domains | 8 / node (4 / socket), each with a dedicated memory channel and further split into 4 groups containing 4 cores each |
 | Cache | 16 MB L3 cache / 4-core chiplet, 512 KB of L2 cache / core and 32 KB of L1 cache / core |
 | Chiplets / NUMA domain | 4 |
-| Simultaneous Multithreading | Disabled
+| Simultaneous Multithreading | Disabled |
 | RAM / node | Standard: 256 GB DDR4 (246 GB available to users); High-memory: 2 TB DDR4 |
 | Local storage | 400GB SSD |
-| Interconnect | Infiniband HDR 200GB/s high /formance interconnect, with a 2.6:1 fat tree topology formed of non-blocking islands of up to 26 nodes |
+| Interconnect | Infiniband HDR 200GB/s high performance interconnect, with a 2.6:1 fat tree topology formed of non-blocking islands of up to 26 nodes |
 
-Hamilton also has one GPU node with the following configuration verified with `cat /proc/cpuinfo` and `nvidia-smi`:
+Hamilton also has one GPU node with the following configuration verified with `cat /proc/cpuinfo`, `lscpu` and `nvidia-smi`:
 
 | Specification | Details |
 | ------------- | ------- |
@@ -32,7 +32,7 @@ Hamilton also has one GPU node with the following configuration verified with `c
 
 ## Bede
 
-The hardware details for Bede are [available here](https://bede-documentation.readthedocs.io/en/latest/hardware/index.html). This information is corroborated by running `cat /proc/cpuinfo` on one of the compute nodes via an interactive session:
+The hardware details for Bede are [available here](https://bede-documentation.readthedocs.io/en/latest/hardware/index.html). This information is corroborated by running `cat /proc/cpuinfo` and `lscpu` on one of the compute nodes via an interactive session:
 
 | Specification               | Details                                                                              |
 | --------------------------- | ------------------------------------------------------------------------------------ |
@@ -54,21 +54,19 @@ Additionally, there is the `infer` partition with Tesla T4 GPUs and 7 Grace Hopp
 
 ### `gn002` and `gn003`
 
-The [Grace Hopper GH200 testbed on COSMA](https://cosma.readthedocs.io/en/latest/nvidiagpu.html#gh200-shareing) contains two nodes, with `gn002` accessible via `ssh` and `gn003` via SLURM queue, both with the following specifications:
+The [Grace Hopper GH200 testbed on COSMA](https://cosma.readthedocs.io/en/latest/nvidiagpu.html#gh200-shareing) contains two nodes, with `gn002` accessible via `ssh` and `gn003` via SLURM queue, both with the following specifications, corroborated with `cat /proc/cpuinfo`, `lscpu` and `nvidia-smi`:
 
 | Specification | Details |
 | ------------------------- | ---------------------------------------------------------------------------- |
 | Processor | 1 $\times$ [NVIDIA GH200 Grace Hopper Superchip](https://dam-cdn.nvd.orangelogic.com/AssetLink/tkno03fa645gb7f33w60rf200d330420.pdf) with a [72-core ARM Grace CPU](https://resources.nvidia.com/en-us-grace-cpu/data-center-datasheet?xs=1123791#page=1) and an [H100 GPU](https://www.nvidia.com/en-gb/data-center/h100/) |
-| Clock speed per CPU | Base: 3.1 GHz, all-core SIMD: 3.0 GHz |
-| L1 Cache | 64KB i-cache + 64KB d-cache |
-| L2 Cache | 1MB / core |
-| L3 Cache | 114MB |
+| Clock speed per CPU | Base: 3100 MHz, all-core SIMD: 3000 MHz, Boost: 3456 MHz |
+| Cache | 4.5MiB L1i/4.5MiB L1d / core, 72MiB L2 / core and 114MiB L3 Cache size / processor |
 | RAM | 480GB (unified) LPDDR5X |
 | Interconnect | [NVLink-C2C](https://www.nvidia.com/en-gb/data-center/nvlink-c2c/) |
 
 ### `gn004`
 
-The [H100 testbed on COSMA](https://cosma.readthedocs.io/en/latest/nvidiagpu.html#gh200-shareing) is on 1 node, `gn004`. This is accessible via `ssh` from 08:00 to 19:00 UK time and via SLURM on the `hardwarelab-gpu` partition outside those hours. It has the following specifications:
+The [H100 testbed on COSMA](https://cosma.readthedocs.io/en/latest/nvidiagpu.html#gh200-shareing) is on 1 node, `gn004`. This is accessible via `ssh` from 08:00 to 19:00 UK time and via SLURM on the `hardwarelab-gpu` partition outside those hours. It has the following specifications, corroborated with `cat /proc/cpuinfo`, `lscpu` and `nvidia-smi`:
 
 | Specification               | Details                                                                              |
 | --------------------------- | ------------------------------------------------------------------------------------ |
@@ -83,7 +81,7 @@ The [H100 testbed on COSMA](https://cosma.readthedocs.io/en/latest/nvidiagpu.htm
 
 ### `gn005`
 
-The [RTX PRO 6000 testbed on COSMA](https://cosma.readthedocs.io/en/latest/nvidiagpu.html#rtx-pro-6000) is on 1 node, `gn005`. This is accessible via `ssh` from 08:00 to 19:00 UK time and via SLURM on the `hardwarelab-gpu` partition outside those hours. It has the following specifications:
+The [RTX PRO 6000 testbed on COSMA](https://cosma.readthedocs.io/en/latest/nvidiagpu.html#rtx-pro-6000) is on 1 node, `gn005`. This is accessible via `ssh` from 08:00 to 19:00 UK time and via SLURM on the `hardwarelab-gpu` partition outside those hours. It has the following specifications, corroborated with `cat /proc/cpuinfo`, `lscpu` and `nvidia-smi`:
 
 | Specification               | Details                                                                              |
 | --------------------------- | ------------------------------------------------------------------------------------ |
