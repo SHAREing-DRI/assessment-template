@@ -53,12 +53,12 @@ The package currently only contains modules to generate figures and metrics for 
 assessment with the `high-level-plots.py` script :
 
 ```txt
-usage: high-level-plots.py [-h] [--version] [-v] [-d] [--svg] [-i INPUT] [-o OUTPUT] [-s] [--show] {intranode,internode,summary} ...
+usage: high-level-plots.py [-h] [--version] [-v] [-d] [--svg] [-i INPUT] [-o OUTPUT] [-s] [--show] {intranode,internode,gpu,summary} ...
 
 Tools to generate plots for the high-level assessment.
 
 positional arguments:
-  {intranode,internode,summary}
+  {intranode,internode,gpu,summary}
                         Mode pertaining to the high-level rubric for which the plots are to be generated.
 
 options:
@@ -77,12 +77,7 @@ graph (line, point or spiderweb plot) and a Markdown formatted version of the in
 be echoed to the standard console output.
 ```
 
-The script currently offers three modes: [`intranode`](#intranode-and-internode), [
-`internode`](#intranode-and-internode) and [`summary`](#summary). Further modules for the high-level, and scripts for
-the low-level assessment will be added in due course as the methodology is developed. The
-"Core" and "I/O" rubrics do not require significant calculations to complete so no associated scripts or modules will be
-created for them. As of 09-09-2026, the workflows and measurements required for the GPU and internode metrics are still
-being established.
+The script currently offers three modes: [`intranode`](#intranode-and-internode), [`internode`](#intranode-and-internode) and [`summary`](#summary). Further modules for the high-level, and scripts for the low-level assessment will be added in due course as the methodology is developed. The "Core" and "I/O" rubrics do not require significant calculations to complete so no associated scripts or modules will be created for them. As of 09-09-2026, the workflows and measurements required for the GPU and internode metrics are still being established.
 
 ### `intranode` and `internode`
 
@@ -147,15 +142,15 @@ cat intranode_times.csv | ./high-level-plots.py -d intranode -mg --markdown-file
 ```
 
 ```md
-|   # Cores/threads |   Time (s) |   Parallel efficiency (%) |
-|------------------:|-----------:|--------------------------:|
-| 1                 | 29.995     | 1.000                     |
-| 2                 | 18.230     | 0.823                     |
-| 4                 | 10.740     | 0.698                     |
-| 8                 | 10.330     | 0.363                     |
-| 16                | 9.1307     | 0.205                     |
-| 32                | 8.5401     | 0.110                     |
-| 64                | 7.4589     | 0.063                     |
+| # Cores/threads | Time (s) | Parallel efficiency (%) |
+|----------------:|---------:|------------------------:|
+|               1 |   29.995 |                   1.000 |
+|               2 |   18.230 |                   0.823 |
+|               4 |   10.740 |                   0.698 |
+|               8 |   10.330 |                   0.363 |
+|              16 |   9.1307 |                   0.205 |
+|              32 |   8.5401 |                   0.110 |
+|              64 |   7.4589 |                   0.063 |
 ```
 
 The script can also be provided a Markdown table in the above format as the input just like the CSV table. For
@@ -176,6 +171,48 @@ The `scaling` module contains three useful functions which could be used for oth
 
 Each function is passed the times as a list of tuples of core count and time taken.
 
+### `gpu`
+
+> [!WARNING]
+> The module can currently only be used for NVIDIA GPUs.
+
+The `gpu` module contains functions that process the metrics generated
+using the [Nsight Compute](https://developer.nvidia.com/nsight-compute) profiling tool for NVIDIA GPUs for the GPU
+assessment.
+
+```txt
+usage: high-level-plots.py gpu [-h]
+
+Compute the GPU score from the metrics collected from Nsight Compute for the SHAREing high-level performance assessment.
+
+options:
+  -h, --help  show this help message and exit
+```
+
+The CSV
+generated from the tool ([as described here](high-level-report.md#5-gpu-performance-assessment)) can be provided as
+input to the module as follows:
+
+```bash
+cat ncu_metrics.csv | ./high-level-plots.py --output=stdout gpu
+```
+
+The module will then parse the input, filter for
+the [relevant metrics](high-level-report.md#5-gpu-performance-assessment), compute the total number of operations in the
+profiled program, and produce a formatted Markdown table of the metrics:
+
+```md
+| Metric                                              |   # operations |
+|:----------------------------------------------------|---------------:|
+| `sm__sass_thread_inst_executed_op_fp16_pred_on.sum` |      139462784 |
+| `sm__sass_thread_inst_executed_op_fp32_pred_on.sum` |      954130859 |
+| `sm__sass_thread_inst_executed_op_fp64_pred_on.sum` |    24513873492 |
+| Total                                               |    25607467135 |
+```
+
+The `# operations` value for the precision relevant for the assessed code is then used to compute the final GPU metric. The produced table, which can be
+printed to the terminal, written to the default file (`gpu_metrics.md`) with `--default/-d` or to one provided by the user via `--output/-o`, can be copied to the high-level assessment report.
+
 ### `summary`
 
 The `summary` module contains functions to generate the rubric summary graphics for the report:
@@ -183,16 +220,15 @@ The `summary` module contains functions to generate the rubric summary graphics 
 ```txt
 usage: high-level-plots.py summary [-h] [-b]
 
-Generate a spiderweb diagram or bar graph for the SHAREing high-level performance assessment. Processes parsed commandline arguments and the input table containing summary metrics per rubric. Input can be either a Markdown
-table or a CSV. Produces spiderweb plot and a Markdown formatted table of the summary metrics per rubric as outputs. :param unprocessed_args: Arguments from the parser to be further processed for the "summary" mode
+Generate a spiderweb diagram or bar graph for the SHAREing high-level performance assessment.
 
 options:
   -h, --help  show this help message and exit
   -b, --bar   Output a bar chart instead of a spiderweb.
 ```
 
-When called with the `summary` mode, the `high-level-plots.py` script takes data input from the standard input, unix
-pipe or input file the same way as the `scaling.py` mode, as either a CSV or Markdown table. It accepts an arbitrary
+When called with the `summary` mode, the `high-level-plots.py` script takes data input from the standard input, UNIX
+pipe or input file as either a CSV or Markdown table. It accepts an arbitrary
 number of rows of "metric, score".
 
 ### Documentation
