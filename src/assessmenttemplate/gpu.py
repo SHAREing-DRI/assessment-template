@@ -101,7 +101,6 @@ def gpu_main(unprocessed_args):
 
     table = gpu_read_metric_table(args)
 
-    if args.output:
-        writer = sys.stdout if args.output == "stdout" else open(args.output, "w")
-        print(table.to_markdown(index=False), file=writer)
-        writer.close()
+    writer = sys.stdout if (args.output == "stdout" or not args.output) else open(args.output, "w")
+    print(table.to_markdown(index=False), file=writer)
+    writer.close()

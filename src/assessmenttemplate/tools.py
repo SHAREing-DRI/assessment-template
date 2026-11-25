@@ -43,7 +43,7 @@ def read_input_table(args) -> pd.DataFrame:
         # Remove heading line
         del lines[1]
         lines = [line.strip('|').replace("|", ',') for line in lines]
-    else:
+    elif args.verbose:
         print("Assuming CSV input")
 
     # For the ncu metrics to remove the header lines

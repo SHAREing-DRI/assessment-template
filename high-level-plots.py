@@ -44,6 +44,8 @@ def _main():
                         help="Specify an optional input file containing the table for the metric."
                              "requested. Will use stdin if none specified.")
     parser.add_argument("-o", "--output",
+                        default=None,
+                        required=False,
                         help="Specify an output file. This can only be used if exactly one output type is requested.")
     parser.add_argument("-s", "--stdout-graph", action="store_true",
                         help="Output image data to stdout (useful for piping)")
