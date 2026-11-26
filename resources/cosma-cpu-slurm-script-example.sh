@@ -35,7 +35,5 @@ export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
 export OMP_PLACES=cores
 export OMP_PROC_BIND=close
 
-# Commands to be run.  
-# Note that mpirun will automatically launch the number of ranks specified above 
-
-mpirun ./executable
+# Commands to be run
+mpirun -n $SLURM_NTASKS ./executable

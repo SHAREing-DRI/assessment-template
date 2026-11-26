@@ -28,5 +28,4 @@ module load nvhpc
 export OMP_NUM_THREADS=1
 
 # Commands to be run
-
-mpirun ./cuda-executable
+mpirun -n 1 ./cuda-executable
