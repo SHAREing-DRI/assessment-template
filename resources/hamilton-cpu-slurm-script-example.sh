@@ -20,7 +20,10 @@
                                       # both to the same file
 #SBATCH --array=[0-2]                 # launch a job array with 3 jobs for repetitions and minor
                                       # parameter changes 
-#SBATCH --distribution=block:block    # distribute ranks in order of 
+#SBATCH --distribution=block:block    # distribute ranks in logical order 
+                                      # eg. Rank 0 on CPU 0 on Node 0, Rank 1 on CPU 1 on Node 0,
+                                      # ..., Rank 128 on CPU 1 on Node 1 etc. Other options are
+                                      # block:cyclic, cyclic:block and cylic:cylic
 
 # Use the 'test' queue for quick (max 10 min) jobs especially when testing settings
 # Smaller jobs can run in the 'shared' queue.  
