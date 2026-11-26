@@ -54,7 +54,7 @@ Additionally, there is the `infer` partition with Tesla T4 GPUs and 7 Grace Hopp
 
 ### `gn002` and `gn003`
 
-The [Grace Hopper GH200 testbed on COSMA](https://cosma.readthedocs.io/en/latest/nvidiagpu.html#gh200-shareing) contains two nodes, with `gn002` accessible via `ssh` and `gn003` via SLURM queue, both with the following specifications, corroborated with `cat /proc/cpuinfo`, `lscpu` and `nvidia-smi`:
+The [Grace Hopper GH200 testbed on COSMA](https://cosma.readthedocs.io/en/latest/nvidiagpu.html#gh200-shareing) contains two nodes, with `gn002` accessible via `ssh` and `gn003` via SLURM queue on the `gracehopper` partition, both with the following specifications, corroborated with `cat /proc/cpuinfo`, `lscpu` and `nvidia-smi`:
 
 | Specification | Details |
 | ------------------------- | ---------------------------------------------------------------------------- |
