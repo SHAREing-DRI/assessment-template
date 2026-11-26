@@ -34,9 +34,11 @@
 # Load required modules
 module load gcc openmpi
 
-# Set OpenMP configuration as required
+# Set OpenMP configuration as required (if not using likwid)
 # e.g. set number of OpenMP threads to the number of cores/threads per rank
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export OMP_PLACES=cores
+export OMP_PROC_BIND=close
 
 # Commands to be run.  
 # Note that mpirun will automatically launch the number of ranks specified above 
