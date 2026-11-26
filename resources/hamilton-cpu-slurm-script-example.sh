@@ -22,17 +22,18 @@
                                       # parameter changes 
 #SBATCH --distribution=block:block    # distribute ranks in order of 
 
+# Use the 'test' queue for quick (max 10 min) jobs especially when testing settings
+# Smaller jobs can run in the 'shared' queue.  
+# Larger jobs that will occupy one or more whole nodes should use the 'multi' queue.
+#SBATCH -p multi
+
+
 # Load required modules
 module load gcc openmpi
 
 # Set OpenMP configuration as required
 # e.g. set number of OpenMP threads to the number of cores/threads per rank
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-
-# Use the 'test' queue for quick (max 10 min) jobs especially when testing settings
-# Smaller jobs can run in the 'shared' queue.  
-# Larger jobs that will occupy one or more whole nodes should use the 'multi' queue.
-#SBATCH -p multi
 
 # Commands to be run.  
 # Note that mpirun will automatically launch the number of ranks specified above 
