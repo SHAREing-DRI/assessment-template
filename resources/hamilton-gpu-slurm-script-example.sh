@@ -6,9 +6,7 @@
 
 # There is only one GPU node. 
 # Resources such as the number of cores, memory and disk space cannot be configured
-# Modify or remove arguments as required
-
-# Request resources:
+# Request resources (modify or remove arguments as required):
 #SBATCH -p cuda                       # The GPU node/partition
 #SBATCH --time=03:00:00               # time limit for job (format:  days-hours:minutes:seconds)
 #SBATCH --job-name="example-job"      # or '-J "example-job"'', the job's name

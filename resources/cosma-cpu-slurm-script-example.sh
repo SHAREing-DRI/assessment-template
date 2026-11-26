@@ -3,9 +3,7 @@
 # Adapted from the COSMA documentation which should be consulted for more settings and configurations
 # Ref: https://cosma.readthedocs.io/en/latest/slurm.html
 
-# Modify or remove arguments as required
-
-# Request resources:
+# Request resources (modify or remove arguments as required):
 #SBATCH --ntasks-per-node=8           # or '-n 8', number of MPI ranks (8 per node)
 #SBATCH --cpus-per-task=16            # or '-c 16', number of cores/threads per rank 
                                       # (16 cores/threads per rank)
